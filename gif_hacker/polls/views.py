@@ -1,46 +1,28 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.http import QueryDict
 from django.shortcuts import render
 from .models import Vote
-import requests
-import json
 
-def index(request):
-    # set the apikey and limit
-    apikey = "LIVDSRZULELA"  
-    # test value
-    lmt = 3
-    # our test search
-    search_term = "HACKER"
-
-    # get the top 20 GIFs for the search term
-    response = requests.get("https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (search_term, apikey, lmt))
-    if response.status_code == 200:
-        # Carrega os gifs, reparte o dict em partes úteis e gera um novo dict somente com as informações necessárias. 
-        gifs = json.loads(response.content)
-        i = 0
-        a = gifs['results']
-        context = {}
-        while (i < int(gifs['next'])):
-            if (a[i]['title'] == ''):
-                a[i]['title'] = 'teste'
-
-            b = a[i]['media']
-            #j = a[i]['title']
-            j = a[i]['title']
-            context[i] = {'id': a[i]['id'], 'titulo' : a[i]['title'], 'url': b[0]['gif']['url']}
-            i = i + 1
-    else:
-        return 404
-    context = {'gifs': context}
-    return render(request, 'polls/index.html', context)
+def index (request):
+    # Insira os paramêtros de busca (chave de acesso, limite e o termo de busca) para realizar a requisição na API TENOR
+    describe = Vote.request(self=0, apikey="LIVDSRZULELA", lmt=20, search_term = "HACKER")
     
+    if (describe == 404):
+        message_error = 'Ocorreu um erro inesperado na busca pelos seus gifs, cheque as suas credencias de acesso a API em polls/views.py'
+        return render(request, 'polls/index.html', message_error)
+    else:
+        # Vinculação das curtidas e Ordenação por número de curtidas
+        describe = Vote.ordenar(self=0, describe=describe)
 
-def detail(request, id_gif):
-    return HttpResponse("You're looking at question %s." % id_gif)
+        context = {'describes': describe}
+        return render(request, 'polls/index.html', context)
 
-def results(request, id_gif):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % id_gif)
+def like(request, id_gif):
+    v = Vote(id_gif=id_gif, vote_type='UP')
+    v.save()
+    return index(request)
 
-def vote(request, id_gif):
-    return HttpResponse("Você está votando  no GIF %s." % id_gif)
+def deslike(request, id_gif):
+    v = Vote(id_gif=id_gif, vote_type='DOWN')
+    v.save()
+    return index(request)

@@ -1,0 +1,38 @@
+{% block content %}
+    {% for describe in describes %}
+    <div class="tenor-gif-embed" data-postid="{{describe.id}}" data-share-method="host" data-width="50%">
+        <a href="{{ describe.itemurl }}"> {{ describe.title }} </a> from 
+        <a href="https://tenor.com/search/hacker-gifs">Hacker GIFs</a></div>
+    </div>
+    {% endfor %}
+{% endblock %}
+
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+
+<section class="card">
+    <div class="card-header">
+      <img
+        src="https://images-na.ssl-images-amazon.com/images/I/91pFFPCBf5L._AC_SX522_.jpg"
+        alt="furniture"
+      />
+    </div>
+    <div class="card-body">
+      <div class="card-content">
+        <div>
+          <h1>Transitions in UX Design</h1>
+          <h2>IN DESIGN & PRINTS</h2>
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Doloremque omnis, autem possimus nam libero dignissimos! Assumenda
+          consequatur, nisi repellat sint eos impedit non mollitia! Deleniti
+          provident aperiam corrupti obcaecati totam!
+        </p>
+      </div>
+      <div class="card-footer">
+        <div>aprove</div>
+        <a href="#"><div>reprove</div></a>
+      </div>
+    </div>
+  </section>

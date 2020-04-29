@@ -1,67 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     
-</head>
-<body>
-    <div class="container">
-        {% block content %}
-        <table id="test_table" class="display table table-striped table-bordered" border="1" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>ID </th>
-                    <th>Título</th>
-                    <th>GIF</th>
-                </tr>
-            </thead>
-            <tbody> 
-                {% for gif in gifs %}
-                <tr>
-                    <td>{{ gif }}</td>
-                    <td>{{ gifs.gif.title.titulo }}</td>
-                    <td><img src="{{gifs.hackerman.url}}" class="img-fluid"></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <title>CHD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;669;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <style type="text/css">
+        body {
+            background-color: #00090cf5;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            }
+  
+        .navbar {
+            background-color: rgb(230, 233, 231);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .navbar-title {
+            font-weight: bold;
+            font-size: 25px;
+        }
+        
+        .navbar-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-menu ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        .navbar-menu li {
+            margin: 0px 5px;
+            cursor: pointer;
+        }
+        
+        #active {
+            color: grey;
+        }
+        
+        .navbar-menu li:hover {
+            color: grey;
+        }
+        
+        .navbar-menu i {
+            margin-left: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .navbar-menu i:hover {
+            color: grey;
+        }
+        
+        .header {
+            background-color: black;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .header div {
+            background-color: white;
+            padding: 20px 40px;
+            font-size: 30px;
+        }
+        
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        
+        .card {
+            width: 500px;
+            margin: 35px;
+        }
+        
+        .card-header img {
+            width: 100%;
+        }
+        
+        .card-body {
+            text-align: center;
+            padding: 15px 25px;
+            background-color: white;
+        }
+        
+        .card-content h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+        #votos a{ 
+            margin-top:20px;
+            margin-bottom:20px;
+            display: flex;
+            align-items: center;
+            text-decoration-style: none;
+            background-color: black !important;
+        }
+        a:hover {
+            color: gray(158, 28, 190);
+        }
+        .card-content h2 {
+            margin-top: 5px;
+            font-size: 12px;
+            font-weight: 100;
+            color: grey;
+        }
+        
+        .card-content p {
+            font-size: 17px;
+        }
+        
+        .card-footer {
+            display: flex;
+            font-size: 12px;
+            justify-content: space-between;
+            color: grey;
+        }
+        .card-like {
+            display: flex;
+            font-size: 20px;
+            justify-content: space-between;
+            color: rgb(1, 11, 15);
+        }
+        .card-like a {
+            color: rgb(1, 11, 15);
+        }
+        .card-like a:hover{
+            color: gray;
+        }
+        /**/
+        .card-footer a {
+            text-decoration: none;
+            color: black !important;
+        }
+        /**/
+        
+        footer {
+            background-color: rgb(253, 255, 253);
+            color: black;
+            text-align: center;
+            padding: 90px 90px 80px;
+        }
+        
+        footer p {
+            font-size: 20px;
+            margin: 0;
+        }
+        footer a {
+            color: black;
+            text-decoration: none;
+        }
+        footer a:hover{
+            color: gray;
+        }
+        .zoom {
+            padding: 10px;
+            background-color: black;
+            transition: transform .2s; /* Animation */
+            margin: 0 auto;
+            box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.5);
+        }
+        .zoom:hover {
+            transform: scale(0.9); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+        .fast-transition {
+            position: relative; /* For positioning the pseudo-element */
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+        }
 
-        <!-- Formato de publicação -->
-        <div class="card mb-3">
-            <img src="https://media.tenor.com/images/c7504b9fb03c95b3b5687d744687e11c/tenor.gif" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-            <img src="https://media.tenor.com/images/c7504b9fb03c95b3b5687d744687e11c/tenor.gif" class="card-img-top" alt="...">
-          </div>
-        {% endblock %}
-        <footer class="footer">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>Desenvolvido por Luan Said</p>
-                </div>
-                <div class="col-md-6">
-                    <p>Um ofereciemento de LOEFFA Company</p>
-                </div>
-            </div>
-        </footer>
-    </div>
+        .fast-transition::before {
+        /* Position the pseudo-element. */
+        content: ' ';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        /* Create the box shadow at expanded size. */
+        box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.5);
+
+        /* Hidden by default. */
+        opacity: 0;
+        transition: opacity 500ms;
+        }
+
+        .fast-transition:hover::before {
+        /* Show the pseudo-element on hover. */
+        opacity: 1;
+        }
+    </style>
+  </head>
+  <body>
+    <!-- Menu principal -->
+    <nav class="navbar">
+      <div class="navbar-title">Central Hacker de GIF'S</div>
+      <!-- <div class="navbar-menu">
+      </div> -->
+    </nav>
+
+    <header class="header">
+      <div class="">
+        A sua central dos melhores gifs hackers!
+      </div>
+    </header>
     
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
+    {% if message_error %}
+      <div class="alert alert-warning" role="alert">
+        <span class="material-icons">
+            {{message_error}}
+        </span>
+        <h4 class="alert-heading">Erro de conexão</h4>
+        <p> {{message_error}} </p>
+      </div>
+    {% else %}
+    <main class="cards">
+    {% for describe in describes %}
+    
+      <section class="card zoom">
+        <div class="card-header">
+            <div class="tenor-gif-embed" data-postid="{{describe.id}}" data-share-method="host" data-width="100%">
+                <a href="{{ describe.itemurl }}"> {{ describe.title }} </a> from 
+                <a href="https://tenor.com/search/hacker-gifs">Hacker GIFs</a>
+            </div>
+        </div>
+        <div class="card-body">
+          <div class="card-content">
+            <div class="card-like">
+                <a href="{% url 'polls:like' describe.id %}">
+                    <div>
+                        <span class="material-icons">
+                            thumb_up
+                        </span>
+                    </div>
+                </a>
+            
+                <a href="{% url 'polls:deslike' describe.id %}">
+                    <div>
+                        <span class="material-icons">
+                            thumb_down
+                        </span>
+                    </div>
+                </a>
+            </div>
+            <div id='votos'>
+                {% if describe.votos_up > 0 or describe.votos_down > 0 %}
+                    <div>
+                        <span class="material-icons"> thumbs_up_down </span>
+                        Total de votos: <strong>{{describe.votos_total}}</strong>
+                    </div>
+                {% else %}
+                    <div> <strong>Nenhum voto ainda :(</strong></div>
+                {%endif%}
+            </div>
+          </div>
+          <div class="card-footer">
+              {% if describe.votos_up > 0 %}
+                <div> <strong>{{describe.votos_up}} hacker(s) votaram como favorito!</strong></div>
+              {%endif%}
+              
+              {% if describe.votos_down != Null and  describe.votos_down > 0 %}
+                <div> <strong>{{describe.votos_down}} hacker(s) não gostaram ... </strong></div>
+              {%endif%}
+          </div>
+        </div>
+      </section>
+    {% endfor %}
+
+    </main>
+    {% endif %}
+    <footer>
+      <div>
+        <a href="https://www.linkedin.com/in/luan-meira-083753111" target="_blank">
+            <h1>LinkedIn</h1>
+        </a>
+        <a href="https://www.github.com/luanSaid" target="_blank">
+            <h2>Github</h2>
+        </a>
+        <h3>Email</h3> <p> luansaidmeira@gmail.com</p>
+      </div>
+    </footer>
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+    <script src="iconic.min.js"></script>
+  </body>
 </html>
